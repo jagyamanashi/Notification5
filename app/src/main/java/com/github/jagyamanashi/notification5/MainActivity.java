@@ -1,6 +1,7 @@
-package com.github.jagyamanashi.notification1;
+package com.github.jagyamanashi.notification5;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,24 +54,24 @@ public class MainActivity extends Activity {
     }
 
     private void showNotification() {
-        int notificationId = 001;
-        String eventTitle = "Event Title";
-        String eventLocation = "Event Location";
+        int notificationId = 005;
+        String sender = "xxx@xxx.xxx";
+        String subject = "My Subject";
 
-        Intent viewIntent = new Intent(this, MainActivity.class);
-        PendingIntent viewPendingIntent =
-                PendingIntent.getActivity(this, 0, viewIntent, 0);
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender()
+                        .setHintHideIcon(true);
 
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("New mail from " + sender)
+                .setContentText(subject)
                 .setSmallIcon(R.drawable.ic_stat_smile)
-                .setContentTitle(eventTitle)
-                .setContentText(eventLocation)
-                .setContentIntent(viewPendingIntent);
+                .extend(wearableExtender)
+                .build();
 
         NotificationManagerCompat notificationManager =
                 NotificationManagerCompat.from(this);
 
-        notificationManager.notify(notificationId, notificationBuilder.build());
+        notificationManager.notify(notificationId, notification);
     }
 }
